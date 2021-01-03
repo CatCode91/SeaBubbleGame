@@ -1,18 +1,29 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
+    //синглтон для переключения сцен с анимацией затухания
+
     public class SceneSwitcher : MonoBehaviour
     {
-        private Animation _animation;
-        private ArrayList _states;
+        public static SceneSwitcher instance = null;
 
-        private void Start()
+        private Animation _animation;
+
+        void Awake()
         {
-            DontDestroyOnLoad(this);
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             _animation = GetComponentInChildren<Animation>(true);
             SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
         }
@@ -32,7 +43,7 @@ namespace Assets.Scripts
 
         private IEnumerator LoadWithDelay(string scene)
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             SceneManager.LoadScene(scene);
         }
 
@@ -41,6 +52,5 @@ namespace Assets.Scripts
             yield return new WaitForSeconds(1);
             _animation.gameObject.SetActive(false);
         }
-
     }
 }
