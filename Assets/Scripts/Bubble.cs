@@ -7,6 +7,10 @@ namespace Assets.Scripts
 {
     public class Bubble : MonoBehaviour, IPointerClickHandler
     {
+        private float _minBubbleScale = 1.7f;
+        private float _maxBubbleScale = 7f;
+
+
         //верхняя точка по Y где шарики уничтожаются
         private float _destroyPoint = 13;
 
@@ -22,7 +26,7 @@ namespace Assets.Scripts
         private void Awake()
         {
             //задаем  размер, цвет, скорость и количество очков при тапе в зависимости от размера шарика
-            Size = UnityEngine.Random.Range(0.7f, 7f);
+            Size = UnityEngine.Random.Range(_minBubbleScale, _maxBubbleScale);
             GetComponent<Renderer>().material.SetColor("Color_011e50e2c03647debbf40a27a5f516c4", colors[Convert.ToInt32(UnityEngine.Random.Range(0, colors.Length - 1))]);
             GetComponent<Transform>().localScale = new Vector3(Size, Size, Size);
             Speed = (500/Size);
@@ -51,7 +55,7 @@ namespace Assets.Scripts
 
         public void MakeFaster(float coef) 
         {
-            Speed += (coef * 3);
+            Speed += coef;
         }   
     }
 }

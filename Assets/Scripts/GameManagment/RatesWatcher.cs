@@ -20,8 +20,9 @@ public class RatesWatcher : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _audio = GetComponent<AudioSource>();
-        _audio.PlayOneShot(count);
+        _audio = AudioManager.instance.Audio;
+        _audio.clip = count;
+        _audio.Play();
         _rate = Player.instance.LastScore;
         _textRate = GetComponentInChildren<TextMeshProUGUI>();
         _animation = GetComponentInChildren<Button>().GetComponent<Animation>();
@@ -29,6 +30,17 @@ public class RatesWatcher : MonoBehaviour
 
     void Update()
     {
+        //if running on Android, check for Menu/Home and exit
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                GoToMainMenu();
+                return;
+            }
+        }
+
+
         if (_isWork) 
         {
             if (_tempRate != _rate)
@@ -102,5 +114,13 @@ public class RatesWatcher : MonoBehaviour
     public void RestartGame() 
     {
         SceneSwitcher.instance.SwitchScene("Game");
+    }
+
+    public void GoToMainMenu() 
+    {
+        _audio.Stop();
+        _audio.clip = AudioManager.instance.Menu;
+        _audio.Play();
+        SceneSwitcher.instance.SwitchScene("Menu");
     }
 }

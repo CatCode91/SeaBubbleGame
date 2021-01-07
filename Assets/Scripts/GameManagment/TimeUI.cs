@@ -1,17 +1,15 @@
-using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class TimeUI : MonoBehaviour
 {
     [SerializeField]
     private float _levelTime;
     private bool _isRunning = true;
-    private TextMeshProUGUI _lblTime;
+    private Text _lblTime;
     public UnityAction TimeIsOver;
+
 
 
     public float LevelTime => _levelTime;
@@ -19,7 +17,7 @@ public class TimeUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _lblTime = GetComponent<TextMeshProUGUI>();
+        _lblTime = GetComponent<Text>();
     }
 
     // Update is called once per frame

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -17,17 +18,18 @@ namespace Assets.Scripts
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(this.gameObject);
+                SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
 
-            _animation = GetComponentInChildren<Animation>(true);
-            SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
-        }
 
+            _animation = GetComponentInChildren<Animation>(true);
+          
+        }
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
             _animation.Play("FadeOut");

@@ -1,20 +1,20 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ScoreUI : MonoBehaviour
 {
-    private int _score = 0;
-    private TextMeshProUGUI _scoreText;
+    private Text _scoreText;
 
-    public int Score => _score;
+    public int Score { get; private set; }
     public UnityAction TimeIsOver;
+    public Color[] colors;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _scoreText = GetComponent<TextMeshProUGUI>();
+        _scoreText = GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -25,26 +25,26 @@ public class ScoreUI : MonoBehaviour
 
     public void AddScore(int score) 
     {
-        _score += score;
+        Score += score;
 
-        if (_score >= 100) 
+        if (Score >= 100) 
         {
-            _scoreText.color = new Color32(5,14,43,100);
+            _scoreText.color = colors[0];
         }
 
-        if (_score >= 200)
+        if (Score >= 200)
         {
-            _scoreText.color = new Color32(15, 46, 0, 100);
+            _scoreText.color = colors[1];
         }
 
-        if (_score >= 300)
+        if (Score >= 300)
         {
-            _scoreText.color = new Color32(84, 30, 1, 100);
+            _scoreText.color = colors[2];
         }
 
-        if (_score >= 2000)
+        if (Score >= 400)
         {
-            _scoreText.color = new Color32(100, 5, 5, 100);
+            _scoreText.color = colors[3];
         }
     }
 
