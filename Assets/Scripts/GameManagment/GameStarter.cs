@@ -15,7 +15,7 @@ public class GameStarter : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKey(KeyCode.Escape) || (Input.GetKey(KeyCode.Menu)))
             {
                 Application.Quit();
                 return;

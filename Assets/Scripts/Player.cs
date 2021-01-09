@@ -8,15 +8,29 @@ namespace Assets.Scripts
     public class Player : MonoBehaviour
     {
         public static Player instance = null;
-        //private SettingsWorker _settings;
+
+        //для хранения настроек с помощью сериализации (не работает на Android)
+        private SettingsWorker _settings;
 
         public List<int> Scores { get; private set; }
 
         public int LastScore => Scores.Last();
 
-        void Awake()
+        public int GetMaxResult()
         {
-          
+            if (Scores.Count > 0)
+            {
+                return Scores.Max();
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+
+        private void Awake()
+        { 
             if (instance == null)
             {
                 instance = this;
@@ -34,10 +48,8 @@ namespace Assets.Scripts
         private void Initializator()
         {
             Scores = new List<int>();
-            //_settings = SettingsWorker.GetInstance();
-
-            int max_result = PlayerPrefs.GetInt("MaxResult", 0);
-           // int max_result = _settings.GetSetting<int>(SettingsType.MaximumRate);
+            _settings = SettingsWorker.GetInstance();
+            int max_result = _settings.GetSetting<int>(SettingsType.MaximumRate);
             if (max_result > 0) 
             {
                 Scores.Add(max_result);
@@ -48,24 +60,10 @@ namespace Assets.Scripts
         {
             if (rate > GetMaxResult())
             {
-                PlayerPrefs.SetInt("MaxResult", rate);
-                //  _settings.SaveOrUpdateSettings<int>(SettingsType.MaximumRate, rate);
+                 _settings.SaveOrUpdateSettings<int>(SettingsType.MaximumRate, rate);
             }
 
             Scores.Add(rate);
-        }
-
-        public int GetMaxResult() 
-        {
-            if (Scores.Count > 0)
-            {
-                return Scores.Max();
-            }
-
-            else 
-            {
-                return 0;
-            }
         }
     }
 }

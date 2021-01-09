@@ -10,9 +10,11 @@ namespace Assets.Scripts
         private float _minBubbleScale = 1.7f;
         private float _maxBubbleScale = 7f;
 
-
         //верхняя точка по Y где шарики уничтожаются
         private float _destroyPoint = 13;
+
+        [SerializeField]
+        private Color32[] colors;
 
         //событие, что на шарик нажали
         public UnityAction<Bubble> Burst;
@@ -21,15 +23,17 @@ namespace Assets.Scripts
         public float Speed { get; private set; }
         public int Score { get; private set; }
 
-        private Color32[] colors = { Color.red, Color.yellow, Color.blue, Color.cyan, Color.magenta, new Color(255,0,255), new Color(43,123,54), new Color(65,2,211), new Color(211,5,32) };
-
+       
         private void Awake()
         {
             //задаем  размер, цвет, скорость и количество очков при тапе в зависимости от размера шарика
             Size = UnityEngine.Random.Range(_minBubbleScale, _maxBubbleScale);
-            GetComponent<Renderer>().material.SetColor("Color_011e50e2c03647debbf40a27a5f516c4", colors[Convert.ToInt32(UnityEngine.Random.Range(0, colors.Length - 1))]);
             GetComponent<Transform>().localScale = new Vector3(Size, Size, Size);
+
+            GetComponent<Renderer>().material.SetColor("Color_011e50e2c03647debbf40a27a5f516c4", colors[Convert.ToInt32(UnityEngine.Random.Range(0, colors.Length))]);
+           
             Speed = (500/Size);
+
             Score = Convert.ToInt32(20 / Size);
         }
 

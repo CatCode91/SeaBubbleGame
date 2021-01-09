@@ -2,6 +2,8 @@
 
 namespace Assets.Scripts.SettingsModel
 {
+    //модель для сериализации настроек в файл
+
     [Serializable]
     public class Settings<T>
     {

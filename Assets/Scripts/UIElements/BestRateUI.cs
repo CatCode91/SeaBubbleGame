@@ -12,6 +12,6 @@ public class BestRateUI : MonoBehaviour
     void Start()
     {
        label = GetComponent<Text>();
-       label.text = FindObjectOfType<Player>().GetMaxResult().ToString();
+       label.text = Player.instance.GetMaxResult().ToString();
     }
 }

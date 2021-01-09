@@ -62,7 +62,7 @@ public class RatesWatcher : MonoBehaviour
             if (_tempRate == _rate) 
             {
                 _isWork = false;
-                var s = Congratulator(_rate);
+                var s = CongratulationsShower(_rate);
                 Text[] texts = GetComponentsInChildren<Text>();
                 texts[0].text = s.Item1;
                 texts[1].text = s.Item2;
@@ -73,7 +73,7 @@ public class RatesWatcher : MonoBehaviour
         }
       }
 
-    private Tuple<string, string> Congratulator(int rate) 
+    private Tuple<string, string> CongratulationsShower(int rate) 
     {
         if (rate > 600)
         {

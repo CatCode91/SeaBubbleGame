@@ -9,9 +9,9 @@ namespace Assets.Scripts
 
     public class SceneSwitcher : MonoBehaviour
     {
-        public static SceneSwitcher instance = null;
-
         private Animation _animation;
+
+        public static SceneSwitcher instance = null;
 
         void Awake()
         {
@@ -30,17 +30,18 @@ namespace Assets.Scripts
             _animation = GetComponentInChildren<Animation>(true);
           
         }
-        private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
-        {
-            _animation.Play("FadeOut");
-            StartCoroutine("ActiveDelay");
-        }
 
-        internal void SwitchScene(string scene)
+        public void SwitchScene(string scene)
         {
             _animation.gameObject.SetActive(true);
             _animation.Play("FadeIn");
             StartCoroutine(LoadWithDelay(scene));
+        }
+
+        private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+        {
+            _animation.Play("FadeOut");
+            StartCoroutine("ActiveDelay");
         }
 
         private IEnumerator LoadWithDelay(string scene)

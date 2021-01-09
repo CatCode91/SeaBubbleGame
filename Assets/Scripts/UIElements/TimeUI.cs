@@ -8,11 +8,9 @@ public class TimeUI : MonoBehaviour
     private float _levelTime;
     private bool _isRunning = true;
     private Text _lblTime;
-    public UnityAction TimeIsOver;
-
-
-
+   
     public float LevelTime => _levelTime;
+    public UnityAction TimeIsOver;
 
     // Start is called before the first frame update
     void Start()

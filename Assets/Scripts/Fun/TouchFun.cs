@@ -4,27 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
+//чисто по фану, нажали на зверюшку - она издает звук)
 public class TouchFun : MonoBehaviour, IPointerClickHandler
 {
-    public AudioClip[] Sounds;
     private AudioSource _audio;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        _audio.PlayOneShot(Sounds[Random.Range(0, Sounds.Length)]);
-        transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(70, 0 ,0), 4);
-    }
+    public AudioClip[] Sounds;
 
-    public void OnMouseDown()
-    {
-        _audio.PlayOneShot(Sounds[Random.Range(0, Sounds.Length)]);
-        transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(70, 0, 0), 4);
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
         _audio = AudioManager.instance.Audio;
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        _audio.PlayOneShot(Sounds[Random.Range(0, Sounds.Length)]);
+    }
+
+    public void OnMouseDown()
+    {
+        _audio.PlayOneShot(Sounds[Random.Range(0, Sounds.Length)]);
+    }
 }

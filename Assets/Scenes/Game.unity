@@ -761,8 +761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078f7b3549b4b85479ca3370de56179f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _screenSize: 8
-  bursts:
+  _screenSize: 9.7
+  BurstSounds:
   - {fileID: 8300000, guid: 9d0abd53703589649addda900e1ae897, type: 3}
   - {fileID: 8300000, guid: ee5d4295bacba864c999b7c7ea5efe48, type: 3}
   - {fileID: 8300000, guid: 05ee951a62d62b1478ed296b1c3355cd, type: 3}

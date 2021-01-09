@@ -13,9 +13,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private float _screenSize = 10.5f;
 
-    public AudioClip[] bursts;
+    //звуки по тапу на пузырек
+    public AudioClip[] BurstSounds;
 
-    // Start is called before the first frame update
     void Start()
     {
         _audio = AudioManager.instance.Audio;
@@ -30,12 +30,27 @@ public class LevelManager : MonoBehaviour
         _audio.Play();
     }
 
+    private void Update()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                _audio.Stop();
+                _audio.clip = AudioManager.instance.Menu;
+                _audio.Play();
+                SceneSwitcher.instance.SwitchScene("Menu");
+                return;
+            }
+        }
+    }
+
     public void AddScore(Bubble bubble) 
     {
         _score.AddScore(bubble.Score);
     }
 
-    public IEnumerator CreateBubbles()
+    private IEnumerator CreateBubbles()
     {
          while (_time.LevelTime.ToString("##") != "1")
         {
@@ -49,19 +64,20 @@ public class LevelManager : MonoBehaviour
         _bubble = Instantiate((GameObject)Resources.Load("Bubble")).GetComponent<Bubble>();
         float widthLimit = _screenSize - _bubble.Size;
         _bubble.transform.position = new Vector3(Random.Range(widthLimit, -widthLimit), 0.75f, -21f);
-        _bubble.Burst += bubleBurst;
+        _bubble.Burst += BubleBurst;
 
+        //увеличиваем скорость шарика, если до конца раунда меньше Х секунд
         if (_time.LevelTime < 23) 
         {
             _bubble.MakeFaster(420 / _time.LevelTime);
         }
     }
 
-    private void bubleBurst(Bubble arg0)
+    private void BubleBurst(Bubble arg0)
     {
         if (_time.LevelTime >= 1f) 
         {
-            _audio.PlayOneShot(bursts[Random.Range(0, bursts.Length)]);
+            _audio.PlayOneShot(BurstSounds[Random.Range(0, BurstSounds.Length)]);
             _score.AddScore(arg0.Score);
             CreateBubble();
         }

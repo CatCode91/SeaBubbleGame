@@ -7,7 +7,6 @@ public class ScoreUI : MonoBehaviour
     private Text _scoreText;
 
     public int Score { get; private set; }
-    public UnityAction TimeIsOver;
     public Color[] colors;
 
 

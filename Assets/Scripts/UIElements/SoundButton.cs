@@ -2,6 +2,8 @@ using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
+//для кнопки управления звуком в игре
+
 public class SoundButton : MonoBehaviour
 {
     private Button _btn;
