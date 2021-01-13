@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    private TimeUI _time;
+    private LevelTimer _time;
     private ScoreUI _score;
     private Bubble _bubble;
     private AudioSource _audio;
@@ -15,11 +15,17 @@ public class LevelManager : MonoBehaviour
 
     //звуки по тапу на пузырек
     public AudioClip[] BurstSounds;
+    public GameObject BubbleInstance;
+
+    [Tooltip("С какой секунды начать увеличивать базовую скорость шариков")]
+    public int SecondsFromMoveFaster = 23;
+    [Tooltip("На сколько  быстрее начнут двигаться шарики с каждой секундой")]
+    public float SpeedFaster = 0.05f;
 
     void Start()
     {
         _audio = AudioManager.instance.Audio;
-        _time = GetComponentInChildren<TimeUI>();
+        _time = GetComponentInChildren<LevelTimer>();
         _score = GetComponentInChildren<ScoreUI>();
         _time.TimeIsOver += TimeIsOvered;
 
@@ -61,15 +67,17 @@ public class LevelManager : MonoBehaviour
 
     private void CreateBubble()
     {
-        _bubble = Instantiate((GameObject)Resources.Load("Bubble")).GetComponent<Bubble>();
+        _bubble = Instantiate(BubbleInstance).GetComponent<Bubble>();
+        _bubble.IsMoving = true;
         float widthLimit = _screenSize - _bubble.Size;
         _bubble.transform.position = new Vector3(Random.Range(widthLimit, -widthLimit), 0.75f, -21f);
         _bubble.Burst += BubleBurst;
+      
 
         //увеличиваем скорость шарика, если до конца раунда меньше Х секунд
-        if (_time.LevelTime < 23) 
+        if (_time.LevelTime < SecondsFromMoveFaster) 
         {
-            _bubble.MakeFaster(420 / _time.LevelTime);
+            _bubble.MakeFaster(SpeedFaster);
         }
     }
 

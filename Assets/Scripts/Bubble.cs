@@ -16,35 +16,38 @@ namespace Assets.Scripts
         [SerializeField]
         private Color32[] colors;
 
+        public bool IsMoving { get; set; }
+
+        public int ScoreCoeff = 20;
+
+        public float BaseSpeed = 0.7f;
+        public float Size { get; private set; }
+        public int Score { get; private set; }
         //событие, что на шарик нажали
         public UnityAction<Bubble> Burst;
 
-        public float Size { get; private set; }
-        public float Speed { get; private set; }
-        public int Score { get; private set; }
-
-       
         private void Awake()
         {
+            IsMoving = false;
             //задаем  размер, цвет, скорость и количество очков при тапе в зависимости от размера шарика
             Size = UnityEngine.Random.Range(_minBubbleScale, _maxBubbleScale);
             GetComponent<Transform>().localScale = new Vector3(Size, Size, Size);
 
             GetComponent<Renderer>().material.SetColor("Color_011e50e2c03647debbf40a27a5f516c4", colors[Convert.ToInt32(UnityEngine.Random.Range(0, colors.Length))]);
-           
-            Speed = (500/Size);
-
-            Score = Convert.ToInt32(20 / Size);
+            Score = Convert.ToInt32(ScoreCoeff / Size);
         }
 
         private void FixedUpdate()
         {
-            transform.Translate(Vector3.forward * (Speed / 1000 ));
-    
-            if (transform.position.z > _destroyPoint) 
+            if (IsMoving) 
             {
-                Destroy(gameObject);
-            }
+                transform.Translate(Vector3.forward * (BaseSpeed / Size));
+
+                if (transform.position.z > _destroyPoint)
+                {
+                    Destroy(gameObject);
+                }
+            }       
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -59,7 +62,7 @@ namespace Assets.Scripts
 
         public void MakeFaster(float coef) 
         {
-            Speed += coef;
+            BaseSpeed += coef;
         }   
     }
 }

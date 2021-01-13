@@ -35,6 +35,8 @@ namespace Assets.Scripts.SettingsModel
            //если платформа андроид, то сохраняем значения в PlayerPrefs
             if (Application.platform == RuntimePlatform.Android)
             {
+                //эти костыли с привидением только для Андроида, т.к. некорректно отрабатывает сериализация.
+
                 if(typeof(T) == typeof(int) || typeof(T) == typeof(bool))
                 {
                     PlayerPrefs.SetInt(name.ToString(), Convert.ToInt32(value));

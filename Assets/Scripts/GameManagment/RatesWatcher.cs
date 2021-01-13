@@ -75,12 +75,12 @@ public class RatesWatcher : MonoBehaviour
 
     private Tuple<string, string> CongratulationsShower(int rate) 
     {
-        if (rate > 600)
+        if (rate > 500)
         {
             return new Tuple<string, string>("Хммм...", "А вы точно не читер? :)");
         }
 
-        if (rate > 500)
+        if (rate > 450)
         {
             return new Tuple<string, string>("Капец!", "Ваши руки не для скуки :)");
         }
@@ -100,7 +100,12 @@ public class RatesWatcher : MonoBehaviour
             return new Tuple<string, string>("Молодец!", "Ты супермегабыстрый!");
         }
 
-        if (rate > 200)
+        if (rate >= 250)
+        {
+            return new Tuple<string, string>("Хороший раунд!", "Может еще разок?");
+        }
+
+        if (rate >= 200)
         {
             return new Tuple<string, string>("Неплохо!", "...но можно и лучше)");
         }

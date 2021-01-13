@@ -4,38 +4,25 @@ using UnityEngine.UI;
 
 public class TimeUI : MonoBehaviour
 {
-    [SerializeField]
-    private float _levelTime;
-    private bool _isRunning = true;
     private Text _lblTime;
+    private LevelTimer _timer;
    
-    public float LevelTime => _levelTime;
-    public UnityAction TimeIsOver;
-
+   
     // Start is called before the first frame update
     void Start()
     {
         _lblTime = GetComponent<Text>();
+        _timer = GetComponentInParent<LevelTimer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isRunning) 
+        _lblTime.text = _timer.LevelTime.ToString("##");
+
+        if (_timer.LevelTime < 10)
         {
-            _levelTime -= Time.deltaTime;
-            _lblTime.text = LevelTime.ToString("##");
-
-            if (LevelTime.ToString("##") == string.Empty) 
-            {
-                _isRunning = false;
-                TimeIsOver?.Invoke();
-            }
-
-            if (_levelTime < 10) 
-            {
-                _lblTime.color = Color.red;            
-            }
+            _lblTime.color = Color.red;
         }
     }
 }
